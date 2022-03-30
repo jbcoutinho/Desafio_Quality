@@ -1,37 +1,74 @@
 package com.mercadolivre.desafio_quality;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+
+import org.assertj.core.util.Arrays;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.mercadolivre.desafio_quality.model.District;
 import com.mercadolivre.desafio_quality.model.Ground;
 import com.mercadolivre.desafio_quality.model.Room;
+import com.mercadolivre.desafio_quality.model.dto.RoomDTO;
 import com.mercadolivre.desafio_quality.service.GroundService;
-import com.mercadolivre.desafio_quality.service.RoomService;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 
-import java.util.ArrayList;
-import java.util.List;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import antlr.collections.List;
 
-public class GroundServiceTest {
-
-    GroundService groundService = new GroundService();
-
-    @Mock
-    RoomService roomService;
-
-//    @Test
-//    public void deveRetornarUmaListaDeRooms() {
-//        Mockito.when(roomService.calculaArea(Mockito.any(Room.class))).thenReturn(12.0);
-//        Room room1 = new Room("cozinha", 15.0, 20.0);
-//        Room room2 = new Room("escritorio", 40.0, 20.0);
-//        Room room3 = new Room("sala", 25.0, 20.0);
-//        Ground ground = new Ground();
-//        List<Room> lista = new ArrayList<>();
-//        lista.add(room1);
-//        lista.add(room2);
-//        lista.add(room3);
-//        ground.setRooms(lista);
-//        groundService.roomsArea(ground);
-//
-//    }
+@SpringBootTest
+@ExtendWith(MockitoExtension.class)
+class GroundServiceTest {
+ 
+	private GroundService groundService;
+	
+	@Test
+	void shouldReturnRoomArea() {
+			
+		
+	}
+	
+	private RoomDTO mockRoomDTO() {
+		return new RoomDTO("any_name", 10.0);
+	}
+	
+	private Ground mockGround() {
+		return new Ground(
+				"any_name",
+				mockDistrict(),
+				mockRoomList()
+			);
+	}
+	
+	private District mockDistrict() {
+		return new District(
+				"any_name",
+				BigDecimal.valueOf(1000)
+			); 
+		
+	}
+	
+	private ArrayList<Room> mockRoomList() {
+		
+		return new ArrayList<>(
+				Arrays.asList(
+					new Room(
+						"any_name",
+						10.0,
+						20.0
+					),
+					new Room(
+						"any_name",
+						10.0,
+						20.0
+					)
+			)
+		);
+	}	
+	
+	
 }
