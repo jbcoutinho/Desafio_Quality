@@ -2,6 +2,8 @@ package com.mercadolivre.desafio_quality.service;
 
 import com.mercadolivre.desafio_quality.model.Room;
 import com.mercadolivre.desafio_quality.model.dto.RoomDTO;
+import com.mercadolivre.desafio_quality.repository.RoomRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -10,6 +12,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class RoomService {
+
+    @Autowired
+    private RoomRepository repository;
 
     /**
      * Calcula a area de um comodo
@@ -38,5 +43,9 @@ public class RoomService {
         List<RoomDTO> roomsSortedByAreaDTOS = rooms.stream().sorted(Comparator.comparing(RoomDTO::getArea)).collect(Collectors.toList());
 
         return roomsSortedByAreaDTOS.get(rooms.size()-1);
+    }
+
+    public List<Room> save(List<Room> rooms) {
+        return repository.saveAll(rooms);
     }
 }
