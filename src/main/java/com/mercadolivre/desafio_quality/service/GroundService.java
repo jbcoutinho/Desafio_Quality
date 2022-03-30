@@ -1,14 +1,12 @@
 package com.mercadolivre.desafio_quality.service;
 
 import com.mercadolivre.desafio_quality.model.Ground;
-import com.mercadolivre.desafio_quality.model.Room;
 import com.mercadolivre.desafio_quality.model.dto.RoomDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,37 +16,43 @@ public class GroundService {
     @Autowired
     RoomService roomService;
 
-    public HashMap<String, Double> roomsArea(Ground ground) {
-        HashMap<String, Double> objectObjectHashMap = new HashMap<>();
-        for (Room room : ground.getRooms()) {
-                objectObjectHashMap.put(room.getRoomName(), roomService.calculaArea(room));
-            }
-        return objectObjectHashMap;
+    public List<RoomDTO> getListRoomDTO(Ground ground) {
+        List<RoomDTO> listRoomDTO =
+                ground
+                    .getRooms()
+                    .stream()
+                    .map(room -> new RoomDTO(room.getRoomName(), roomService.calculaArea(room)))
+                    .collect(Collectors.toList());
+        return listRoomDTO;
     }
 
-    private Double calculateArea(HashMap<String, Double> hashMap) {
-        return hashMap.values().stream().reduce(0.0, (accumulator, element) -> accumulator + element);
+    private Double calculateRoomsArea(List<RoomDTO> rooms) {
+        return rooms.stream().reduce(0.0, (acc, ele) -> ele.getArea() + acc, Double::sum);
     }
 
     public BigDecimal groundValue(Ground ground) {
+        List<RoomDTO> rooms = this.getListRoomDTO(ground);
+        Double totalArea = calculateRoomsArea(rooms);
 
-        HashMap<String, Double> hashMap = this.roomsArea(ground);
-        Double value = calculateArea(hashMap);
-
-        return ground.getDistrict().getValueDistrictM2().multiply(BigDecimal.valueOf(value));
-
+        return ground.getDistrict().getValueDistrictM2().multiply(BigDecimal.valueOf(totalArea));
     }
 
-    public RoomDTO biggestArea(HashMap<String, Double> rooms) {
+    public RoomDTO biggestArea(List<RoomDTO> rooms) {
 
-        List<Double> areas = rooms.values().stream().sorted().collect(Collectors.toList());
-        Double issoAaqui = areas.get(areas.size() -1);
-            for (String o : rooms.keySet()) {
-                if (rooms.get(o).equals(issoAaqui)) {
-                    return new RoomDTO(o, issoAaqui);
-                }
-            }
-            return null;
-        }
+        List<RoomDTO> sortedRoomsDTOS = rooms.stream().sorted(Comparator.comparing(RoomDTO::getArea)).collect(Collectors.toList());
+
+        return sortedRoomsDTOS.get(rooms.size()-1);
+
+//        List<Double> areas = rooms.values().stream().sorted().collect(Collectors.toList());
+//        Double issoAaqui = areas.get(areas.size() -1);
+//            for (String o : rooms.keySet()) {
+//                if (rooms.get(o).equals(issoAaqui)) {
+//                    return new RoomDTO(o, issoAaqui);
+//                }
+//            }
+//            return null;
+//        }
+//        return null;
     }
+}
 
