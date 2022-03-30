@@ -60,5 +60,11 @@ public class GroundServiceTest {
         assertEquals(10.0, groundService.groundArea(10L));
     }
 
+    @Test
+    public void naoDeveDevolverAAreaDeUmaPropriedade() {
+        Throwable exception = assertThrows(RuntimeException.class,()->groundService.groundArea(1L));
+        assertEquals("imovel nao encontrado na nossa base de dados!", exception.getMessage() );
+    }
+
 
 }
