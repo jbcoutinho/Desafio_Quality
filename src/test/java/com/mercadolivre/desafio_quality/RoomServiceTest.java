@@ -11,7 +11,7 @@ public class RoomServiceTest {
     private RoomService roomService = new RoomService();
 
     @Test
-    public void deveRetornarM2DeUmComodo(){
+    public void shouldReturnTheAreaInM2(){
         Room room = new Room("sala", 10.0,20.0);
         assertEquals(200.0, roomService.calculaArea(room));
     }
