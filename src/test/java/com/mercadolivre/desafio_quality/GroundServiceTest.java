@@ -42,15 +42,16 @@ class GroundServiceTest {
     }
 
 	private Ground mockGround(){
-
-
 		Room room1 = new Room(1L,"quarto", 5.0, 1.0);
 		Room room2 = new Room(1L,"sala", 5.0, 1.0);
 		Room room3 = new Room(1L,"cozinha", 5.0, 1.0);
+
 		List<Room> rooms = new ArrayList<>();
+
 		rooms.add(room1);
 		rooms.add(room2);
 		rooms.add(room3);
+
 		return new Ground(1L,"name", new District(1L,"teste", BigDecimal.valueOf(15)), rooms);
 	}
 
@@ -58,11 +59,16 @@ class GroundServiceTest {
     void shouldReturnRoomsArea() {
         List<RoomDTO> roomList;
 
-		Mockito.when(groundRepositoryMock.findById(Mockito.anyLong())).thenReturn(Optional.of(createGround()));
+		Mockito.when(groundRepositoryMock.findById(Mockito.anyLong())).thenReturn(Optional.of(mockGround()));
         roomList = service.getRoomList(Mockito.anyLong());
 
-
-        assertEquals(null, roomList);
+        assertEquals("quarto", roomList.get(0).getName());
+        assertEquals(5.0, roomList.get(0).getArea());
+        assertEquals("sala", roomList.get(1).getName());
+        assertEquals(5.0, roomList.get(1).getArea());
+        assertEquals("cozinha", roomList.get(2).getName());
+        assertEquals(5.0, roomList.get(2).getArea());
+        assertEquals(3, roomList.size());
     }
 
 	@Test
