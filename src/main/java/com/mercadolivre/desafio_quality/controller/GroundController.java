@@ -25,7 +25,7 @@ public class GroundController {
      * @return retorna o valor da propriedade
      */
     @GetMapping("/ground/{groundID}/value")
-    public ResponseEntity<BigDecimal> groundValue(@PathVariable Long groundID) {
+    public ResponseEntity<String> groundValue(@PathVariable Long groundID) {
         return ResponseEntity.ok(groundService.groundValue(groundID));
     }
 
