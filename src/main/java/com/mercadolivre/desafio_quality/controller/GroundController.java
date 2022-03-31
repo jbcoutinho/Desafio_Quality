@@ -54,7 +54,7 @@ public class GroundController {
     * */
     @PostMapping("/ground/{groundID}/room/biggest")
     public ResponseEntity<RoomDTO> biggestRoomArea(@PathVariable Long groundID) {
-        return ResponseEntity.ok(groundService.area(groundService.getArea(groundID)));
+        return ResponseEntity.ok(groundService.biggestRoom(groundService.getArea(groundID)));
     }
 
     @PostMapping("/ground")

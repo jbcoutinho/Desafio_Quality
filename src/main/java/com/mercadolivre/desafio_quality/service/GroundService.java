@@ -35,16 +35,16 @@ public class GroundService {
      * @return retorna uma lista com todos os comodos de uma propriedade com sua area ja calculada
      */
     public List<RoomDTO> getArea(Long groundID) {
-        return calculateArea(groundID);
+        return calculateGroundArea(groundID);
     }
 
-    private List<RoomDTO> calculateArea(Long groundID) {
+    private List<RoomDTO> calculateGroundArea(Long groundID) {
         Ground ground = findById(groundID);
 
         return ground
                 .getRooms()
                 .stream()
-                .map(room -> new RoomDTO(room.getRoomName(), calculaArea(room)))
+                .map(room -> new RoomDTO(room.getRoomName(), caculateRoomArea(room)))
                 .collect(Collectors.toList());
     }
 
@@ -92,7 +92,7 @@ public class GroundService {
      * @param room comodo para calculo da area
      * @return area calculada do comodo
      */
-    private Double calculaArea(Room room) {
+    private Double caculateRoomArea(Room room) {
         return room.getRoomLength() * room.getRoomWidth();
     }
 
@@ -105,7 +105,7 @@ public class GroundService {
         return rooms.stream().reduce(0.0, (acc, ele) -> ele.getArea() + acc, Double::sum);
     }
 
-    public RoomDTO area(List<RoomDTO> rooms) {
+    public RoomDTO biggestRoom(List<RoomDTO> rooms) {
         return biggestArea(rooms);
     }
 
