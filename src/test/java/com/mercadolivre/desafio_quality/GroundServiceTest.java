@@ -1,37 +1,30 @@
 package com.mercadolivre.desafio_quality;
 
-import static org.junit.jupiter.api.Assertions.*;
+import com.mercadolivre.desafio_quality.model.District;
+import com.mercadolivre.desafio_quality.model.Ground;
+import com.mercadolivre.desafio_quality.model.Room;
+import com.mercadolivre.desafio_quality.model.dto.DistrictDTO;
+import com.mercadolivre.desafio_quality.model.dto.GroundDTO;
+import com.mercadolivre.desafio_quality.model.dto.RoomDTO;
+import com.mercadolivre.desafio_quality.model.dto.RoomInputDTO;
+import com.mercadolivre.desafio_quality.repository.GroundRepository;
+import com.mercadolivre.desafio_quality.repository.RoomRepository;
+import com.mercadolivre.desafio_quality.service.DistrictService;
+import com.mercadolivre.desafio_quality.service.GroundService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
-import com.mercadolivre.desafio_quality.repository.GroundRepository;
-import org.assertj.core.util.Arrays;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import com.mercadolivre.desafio_quality.model.dto.DistrictDTO;
-import com.mercadolivre.desafio_quality.model.dto.GroundDTO;
-import com.mercadolivre.desafio_quality.model.dto.RoomInputDTO;
-import com.mercadolivre.desafio_quality.repository.GroundRepository;
-import com.mercadolivre.desafio_quality.repository.RoomRepository;
-import com.mercadolivre.desafio_quality.service.DistrictService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import com.mercadolivre.desafio_quality.model.District;
-import com.mercadolivre.desafio_quality.model.Ground;
-import com.mercadolivre.desafio_quality.model.Room;
-import com.mercadolivre.desafio_quality.model.dto.RoomDTO;
-import com.mercadolivre.desafio_quality.service.GroundService;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -48,8 +41,6 @@ class GroundServiceTest {
     }
 
 	private Ground mockGround(){
-
-
 		Room room1 = new Room(1L,"quarto", 5.0, 1.0);
 		Room room2 = new Room(1L,"sala", 5.0, 1.0);
 		Room room3 = new Room(1L,"cozinha", 5.0, 1.0);
