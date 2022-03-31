@@ -60,6 +60,16 @@ class GroundServiceTest {
 		return new Ground(1L,"name", new District(1L,"teste", BigDecimal.valueOf(15)), rooms);
 	}
 
+    @Test
+    void shouldReturnRoomsArea() {
+        List<Room> rooms = new ArrayList();
+
+		Mockito.when(groundRepositoryMock.findById(Mockito.anyLong())).thenReturn(Optional.of(mockGround()));
+        rooms = service.getArea(Mockito.anyLong());
+
+        assertEquals(15.0 , area);
+    }
+
 	@Test
 	void shouldReturnGroundArea() {
 
