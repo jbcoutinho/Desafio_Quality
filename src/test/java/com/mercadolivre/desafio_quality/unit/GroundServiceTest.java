@@ -1,6 +1,4 @@
-package com.mercadolivre.desafio_quality;
-
-import static org.junit.jupiter.api.Assertions.*;
+package com.mercadolivre.desafio_quality.unit;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -11,21 +9,27 @@ import java.util.Optional;
 import com.mercadolivre.desafio_quality.repository.GroundRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import com.mercadolivre.desafio_quality.model.dto.DistrictDTO;
-import com.mercadolivre.desafio_quality.model.dto.GroundDTO;
-import com.mercadolivre.desafio_quality.model.dto.RoomInputDTO;
-import com.mercadolivre.desafio_quality.repository.RoomRepository;
-import com.mercadolivre.desafio_quality.service.DistrictService;
-import org.junit.jupiter.api.BeforeEach;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import com.mercadolivre.desafio_quality.model.District;
 import com.mercadolivre.desafio_quality.model.Ground;
 import com.mercadolivre.desafio_quality.model.Room;
+import com.mercadolivre.desafio_quality.model.dto.DistrictDTO;
+import com.mercadolivre.desafio_quality.model.dto.GroundDTO;
 import com.mercadolivre.desafio_quality.model.dto.RoomDTO;
+import com.mercadolivre.desafio_quality.model.dto.RoomInputDTO;
+import com.mercadolivre.desafio_quality.repository.RoomRepository;
+import com.mercadolivre.desafio_quality.service.DistrictService;
 import com.mercadolivre.desafio_quality.service.GroundService;
+import org.junit.jupiter.api.BeforeEach;
+
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -69,6 +73,16 @@ class GroundServiceTest {
         assertEquals("cozinha", roomList.get(2).getName());
         assertEquals(5.0, roomList.get(2).getArea());
         assertEquals(3, roomList.size());
+
+		Mockito.when(groundRepositoryMock.findById(Mockito.anyLong())).thenReturn(Optional.of(createGround()));
+        roomList = service.getRoomList(Mockito.anyLong());
+
+        List<RoomDTO> list = createGround().getRooms().stream().map(room -> new RoomDTO(room.getRoomName(),
+                        (room.getRoomLength() * room.getRoomWidth()))
+                )
+                .collect(Collectors.toList());
+
+        assertEquals(list, roomList);
     }
 
 	@Test
@@ -97,9 +111,9 @@ class GroundServiceTest {
         Ground casaChique = createGround();
         Mockito.when(groundRepositoryMock.findById(Long.valueOf("1234"))).thenReturn(Optional.of(casaChique));
 
-        BigDecimal result = service.groundValue(Long.valueOf("1234"));
+        String result = service.groundValue(Long.valueOf("1234"));
 
-        assertEquals(BigDecimal.valueOf(90000.0), result);
+        assertEquals("90,000.00", result);
     }
 
     @Test

@@ -12,6 +12,7 @@ import com.mercadolivre.desafio_quality.repository.RoomRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -57,12 +58,12 @@ public class GroundService {
      * @param groundId - id da propriedade com os dados para avaliacao
      * @return retorna o valor da propriedade
      */
-    public BigDecimal groundValue(Long groundId) {
+    public String groundValue(Long groundId) {
         Ground ground = findById(groundId);
         List<RoomDTO> rooms = this.getRoomList(groundId);
         Double totalArea = sumRoomsArea(rooms);
-
-        return ground.getDistrict().getValueDistrictM2().multiply(BigDecimal.valueOf(totalArea));
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+        return decimalFormat.format(ground.getDistrict().getValueDistrictM2().multiply(BigDecimal.valueOf(totalArea)));
     }
 
     private Ground findById(Long groundId) {

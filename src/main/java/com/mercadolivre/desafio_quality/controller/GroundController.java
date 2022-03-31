@@ -5,11 +5,11 @@ import com.mercadolivre.desafio_quality.model.dto.GroundDTO;
 import com.mercadolivre.desafio_quality.model.dto.RoomDTO;
 import com.mercadolivre.desafio_quality.service.GroundService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -24,7 +24,7 @@ public class GroundController {
      * @return retorna o valor da propriedade
      */
     @GetMapping("/ground/{groundID}/value")
-    public ResponseEntity<BigDecimal> groundValue(@PathVariable Long groundID) {
+    public ResponseEntity<String> groundValue(@PathVariable Long groundID) {
         return ResponseEntity.ok(groundService.groundValue(groundID));
     }
 
@@ -60,6 +60,6 @@ public class GroundController {
 
     @PostMapping("/ground")
     public ResponseEntity<Ground> create(@RequestBody @Valid GroundDTO ground) {
-        return ResponseEntity.ok(groundService.save(ground));
+        return new ResponseEntity<>(groundService.save(ground), HttpStatus.CREATED );
     }
 }
