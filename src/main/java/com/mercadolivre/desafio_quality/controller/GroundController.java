@@ -4,7 +4,6 @@ import com.mercadolivre.desafio_quality.model.Ground;
 import com.mercadolivre.desafio_quality.model.dto.GroundDTO;
 import com.mercadolivre.desafio_quality.model.dto.RoomDTO;
 import com.mercadolivre.desafio_quality.service.GroundService;
-import com.mercadolivre.desafio_quality.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +15,7 @@ import java.util.List;
 public class GroundController {
 
     @Autowired
-    private GroundService service;
-
-    @Autowired
-    private RoomService roomService;
+    private GroundService groundService;
 
     /**
      * Calcula o valor de uma propriedade baseado na sua area e no seu bairro
@@ -28,7 +24,7 @@ public class GroundController {
      */
     @PostMapping("/ground/{groundID}/value")
     public ResponseEntity<BigDecimal> groundValue(@PathVariable Long groundID) {
-        return ResponseEntity.ok(service.groundValue(groundID));
+        return ResponseEntity.ok(groundService.groundValue(groundID));
     }
 
     /**
@@ -38,7 +34,7 @@ public class GroundController {
      */
     @PostMapping("/ground/{groundID}/area")
     public ResponseEntity<Double> groundArea(@PathVariable Long groundID) {
-        return ResponseEntity.ok(service.groundArea(groundID));
+        return ResponseEntity.ok(groundService.groundArea(groundID));
     }
 
     /**
@@ -48,7 +44,7 @@ public class GroundController {
      */
     @PostMapping("/ground/{groundID}/room/areas")
     public ResponseEntity<List<RoomDTO>> groundAreas(@PathVariable Long groundID) {
-        return ResponseEntity.ok(service.getListRoomWithCalculatedArea(groundID));
+        return ResponseEntity.ok(groundService.getArea(groundID));
     }
 
     /**
@@ -58,11 +54,11 @@ public class GroundController {
     * */
     @PostMapping("/ground/{groundID}/room/biggest")
     public ResponseEntity<RoomDTO> biggestRoomArea(@PathVariable Long groundID) {
-        return ResponseEntity.ok(roomService.biggestArea(service.getListRoomWithCalculatedArea(groundID)));
+        return ResponseEntity.ok(groundService.biggestArea(groundService.getArea(groundID)));
     }
 
     @PostMapping("/ground")
     public ResponseEntity<Ground> create(@RequestBody GroundDTO ground) {
-        return ResponseEntity.ok(service.save(ground));
+        return ResponseEntity.ok(groundService.save(ground));
     }
 }
