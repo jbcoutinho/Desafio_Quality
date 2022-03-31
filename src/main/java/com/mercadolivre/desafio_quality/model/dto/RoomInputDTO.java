@@ -1,11 +1,15 @@
 package com.mercadolivre.desafio_quality.model.dto;
 
 import com.mercadolivre.desafio_quality.model.Room;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.*;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class RoomInputDTO {
 
     @NotBlank(message = "O nome do cômodo não pode ficar vazio.")
