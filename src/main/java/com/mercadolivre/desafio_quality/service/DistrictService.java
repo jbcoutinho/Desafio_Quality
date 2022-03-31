@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class DistrictService {
 
-    @Autowired
-    private DistrictRepository repository;
+    private final DistrictRepository repository;
+
+    public DistrictService(DistrictRepository repository) {
+        this.repository = repository;
+    }
 
     public District save (District district) {
         return  repository.save(district);

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class GroundController {
      * @param groundID - id do objeto com os dados da propriedade a ser avaliada
      * @return retorna o valor da propriedade
      */
-    @PostMapping("/ground/{groundID}/value")
+    @GetMapping("/ground/{groundID}/value")
     public ResponseEntity<BigDecimal> groundValue(@PathVariable Long groundID) {
         return ResponseEntity.ok(groundService.groundValue(groundID));
     }
@@ -32,7 +33,7 @@ public class GroundController {
      * @param groundID - objeto com os dados da propriedade a ser avaliada
      * @return retorna a area da propriedade
      */
-    @PostMapping("/ground/{groundID}/area")
+    @GetMapping("/ground/{groundID}/area")
     public ResponseEntity<Double> groundArea(@PathVariable Long groundID) {
         return ResponseEntity.ok(groundService.groundArea(groundID));
     }
@@ -42,7 +43,7 @@ public class GroundController {
      * @param groundID - objeto com os dados da propriedade a ser avaliada
      * @return retorna a area de cada comodo da propriedade
      */
-    @PostMapping("/ground/{groundID}/room/areas")
+    @GetMapping("/ground/{groundID}/room/areas")
     public ResponseEntity<List<RoomDTO>> groundAreas(@PathVariable Long groundID) {
         return ResponseEntity.ok(groundService.getArea(groundID));
     }
@@ -52,13 +53,13 @@ public class GroundController {
     * @param groundID - objeto com os dados da propriedade a ser avaliada
     * @return Retorna um objeto com os dados do maior comodo em uma propriedade
     * */
-    @PostMapping("/ground/{groundID}/room/biggest")
+    @GetMapping("/ground/{groundID}/room/biggest")
     public ResponseEntity<RoomDTO> biggestRoomArea(@PathVariable Long groundID) {
         return ResponseEntity.ok(groundService.biggestRoom(groundService.getArea(groundID)));
     }
 
     @PostMapping("/ground")
-    public ResponseEntity<Ground> create(@RequestBody GroundDTO ground) {
+    public ResponseEntity<Ground> create(@RequestBody @Valid GroundDTO ground) {
         return ResponseEntity.ok(groundService.save(ground));
     }
 }

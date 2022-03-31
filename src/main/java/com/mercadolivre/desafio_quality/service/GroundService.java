@@ -9,9 +9,12 @@ import com.mercadolivre.desafio_quality.model.dto.RoomDTO;
 import com.mercadolivre.desafio_quality.model.dto.RoomInputDTO;
 import com.mercadolivre.desafio_quality.repository.GroundRepository;
 import com.mercadolivre.desafio_quality.repository.RoomRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
@@ -20,14 +23,19 @@ import java.util.stream.Collectors;
 
 @Service
 public class GroundService {
-    @Autowired
-    private DistrictService districtService;
 
-    @Autowired
-    private GroundRepository groundRepository;
+    private final DistrictService districtService;
 
-    @Autowired
-    private RoomRepository roomRepository;
+    private final GroundRepository groundRepository;
+
+    private final RoomRepository roomRepository;
+
+
+    public GroundService(GroundRepository groundRepository, RoomRepository roomRepository, DistrictService districtService) {
+        this.groundRepository = groundRepository;
+        this.roomRepository = roomRepository;
+        this.districtService = districtService;
+    }
 
     /**
      * Recebe os dados de uma propriedade e converte em uma lista de comodos com sua area calculada
@@ -64,7 +72,7 @@ public class GroundService {
     private Ground findById(Long groundId) {
         Optional<Ground> opt = groundRepository.findById(groundId);
         if(opt.isEmpty()){
-            throw new RuntimeException("imovel nao encontrado na nossa base de dados!");
+            throw new RuntimeException("Imóvel nao encontrado na nossa base de dados!");
         }
         return opt.get();
     }
@@ -75,7 +83,7 @@ public class GroundService {
      * @return retorna a area da propriedade
      */
     public Double groundArea(Long groundID) {
-        List<RoomDTO> listRoomDTO = getArea(groundID);
+        List<RoomDTO> listRoomDTO = calculateGroundArea(groundID);
         return sumRoomsArea(listRoomDTO);
     }
 
