@@ -9,20 +9,14 @@ import java.util.Optional;
 
 
 import com.mercadolivre.desafio_quality.repository.GroundRepository;
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import com.mercadolivre.desafio_quality.model.dto.DistrictDTO;
 import com.mercadolivre.desafio_quality.model.dto.GroundDTO;
 import com.mercadolivre.desafio_quality.model.dto.RoomInputDTO;
-import com.mercadolivre.desafio_quality.repository.GroundRepository;
 import com.mercadolivre.desafio_quality.repository.RoomRepository;
 import com.mercadolivre.desafio_quality.service.DistrictService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -60,14 +54,23 @@ class GroundServiceTest {
 		return new Ground(1L,"name", new District(1L,"teste", BigDecimal.valueOf(15)), rooms);
 	}
 
+    @Test
+    void shouldReturnRoomsArea() {
+        List<RoomDTO> roomList;
+
+		Mockito.when(groundRepositoryMock.findById(Mockito.anyLong())).thenReturn(Optional.of(createGround()));
+        roomList = service.getRoomList(Mockito.anyLong());
+
+
+        assertEquals(null, roomList);
+    }
+
 	@Test
 	void shouldReturnGroundArea() {
-
 		Mockito.when(groundRepositoryMock.findById(Mockito.anyLong())).thenReturn(Optional.of(mockGround()));
 		Double area = service.groundArea(Mockito.anyLong());
 
 		assertEquals(15.0, area);
-		
 	}
 
     public Ground createGround() {
@@ -134,6 +137,5 @@ class GroundServiceTest {
         Ground save = service.save(groundDTO);
 
         assertEquals(ground, save);
-
     }
 }
