@@ -9,12 +9,8 @@ import com.mercadolivre.desafio_quality.model.dto.RoomDTO;
 import com.mercadolivre.desafio_quality.model.dto.RoomInputDTO;
 import com.mercadolivre.desafio_quality.repository.GroundRepository;
 import com.mercadolivre.desafio_quality.repository.RoomRepository;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
@@ -42,11 +38,11 @@ public class GroundService {
      * @param groundID - objeto com os dados da propriedade a ser avaliada
      * @return retorna uma lista com todos os comodos de uma propriedade com sua area ja calculada
      */
-    public List<RoomDTO> getArea(Long groundID) {
-        return calculateGroundArea(groundID);
+    public List<RoomDTO> getRoomList(Long groundID) {
+        return returnRoomList(groundID);
     }
 
-    private List<RoomDTO> calculateGroundArea(Long groundID) {
+    private List<RoomDTO> returnRoomList(Long groundID) {
         Ground ground = findById(groundID);
 
         return ground
@@ -63,7 +59,7 @@ public class GroundService {
      */
     public BigDecimal groundValue(Long groundId) {
         Ground ground = findById(groundId);
-        List<RoomDTO> rooms = this.getArea(groundId);
+        List<RoomDTO> rooms = this.getRoomList(groundId);
         Double totalArea = sumRoomsArea(rooms);
 
         return ground.getDistrict().getValueDistrictM2().multiply(BigDecimal.valueOf(totalArea));
@@ -83,7 +79,7 @@ public class GroundService {
      * @return retorna a area da propriedade
      */
     public Double groundArea(Long groundID) {
-        List<RoomDTO> listRoomDTO = calculateGroundArea(groundID);
+        List<RoomDTO> listRoomDTO = returnRoomList(groundID);
         return sumRoomsArea(listRoomDTO);
     }
 
