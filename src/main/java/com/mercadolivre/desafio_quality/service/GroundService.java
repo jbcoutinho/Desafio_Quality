@@ -23,11 +23,14 @@ public class GroundService {
     @Autowired
     private DistrictService districtService;
 
-    @Autowired
-    private GroundRepository groundRepository;
+    private final GroundRepository groundRepository;
 
     @Autowired
     private RoomRepository roomRepository;
+
+    public GroundService(GroundRepository groundRepository) {
+        this.groundRepository = groundRepository;
+    }
 
     /**
      * Recebe os dados de uma propriedade e converte em uma lista de comodos com sua area calculada
