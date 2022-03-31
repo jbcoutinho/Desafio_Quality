@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -58,8 +59,12 @@ class GroundServiceTest {
 		Mockito.when(groundRepositoryMock.findById(Mockito.anyLong())).thenReturn(Optional.of(createGround()));
         roomList = service.getRoomList(Mockito.anyLong());
 
+        List<RoomDTO> list = createGround().getRooms().stream().map(room -> new RoomDTO(room.getRoomName(),
+                        (room.getRoomLength() * room.getRoomWidth()))
+                )
+                .collect(Collectors.toList());
 
-        assertEquals(null, roomList);
+        assertEquals(list, roomList);
     }
 
 	@Test
