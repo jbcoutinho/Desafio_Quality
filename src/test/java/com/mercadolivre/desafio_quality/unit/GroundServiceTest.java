@@ -1,4 +1,4 @@
-package com.mercadolivre.desafio_quality;
+package com.mercadolivre.desafio_quality.unit;
 
 import com.mercadolivre.desafio_quality.model.District;
 import com.mercadolivre.desafio_quality.model.Ground;
@@ -93,9 +93,9 @@ class GroundServiceTest {
         Ground casaChique = createGround();
         Mockito.when(groundRepositoryMock.findById(Long.valueOf("1234"))).thenReturn(Optional.of(casaChique));
 
-        BigDecimal result = service.groundValue(Long.valueOf("1234"));
+        String result = service.groundValue(Long.valueOf("1234"));
 
-        assertEquals(BigDecimal.valueOf(90000.0), result);
+        assertEquals("90.000,00", result);
     }
 
     @Test
