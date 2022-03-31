@@ -79,11 +79,11 @@ class GroundServiceTest {
 		assertEquals(15.0, area);
 	}
 
-    public Ground createGround() {
-        Room roomQuarto = Room.builder().roomName("Quarto").roomLength(Double.valueOf(10)).roomWidth(Double.valueOf(5)).build();
-        Room roomSala = Room.builder().roomName("Sala").roomLength(Double.valueOf(5)).roomWidth(Double.valueOf(5)).build();
+    private Ground createGround() {
+        Room roomQuarto = Room.builder().roomName("Quarto").roomLength(10.0).roomWidth(5.0).build();
+        Room roomSala = Room.builder().roomName("Sala").roomLength(5.0).roomWidth(5.0).build();
 
-        List<Room> rooms = new ArrayList();
+        List<Room> rooms = new ArrayList<>();
         rooms.add(roomQuarto);
         rooms.add(roomSala);
 
@@ -117,7 +117,7 @@ class GroundServiceTest {
         Ground ground = createGround();
         List<RoomDTO> roomDTOS= new ArrayList<>();
         for (Room room: ground.getRooms()) {
-            roomDTOS.add(new RoomDTO(room.getRoomName(), Double.valueOf(room.getRoomLength() * room.getRoomWidth())));
+            roomDTOS.add(new RoomDTO(room.getRoomName(), room.getRoomLength() * room.getRoomWidth()));
         }
         RoomDTO roomDTO = service.biggestRoom(roomDTOS);
         assertEquals(roomDTOS.get(0), roomDTO);
