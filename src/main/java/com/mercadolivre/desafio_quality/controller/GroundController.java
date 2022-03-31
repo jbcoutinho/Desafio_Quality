@@ -46,7 +46,7 @@ public class GroundController {
      */
     @GetMapping("/ground/{groundID}/room/areas")
     public ResponseEntity<List<RoomDTO>> groundAreas(@PathVariable Long groundID) {
-        return ResponseEntity.ok(groundService.getArea(groundID));
+        return ResponseEntity.ok(groundService.getRoomList(groundID));
     }
 
     /**
@@ -56,7 +56,7 @@ public class GroundController {
     * */
     @GetMapping("/ground/{groundID}/room/biggest")
     public ResponseEntity<RoomDTO> biggestRoomArea(@PathVariable Long groundID) {
-        return ResponseEntity.ok(groundService.biggestRoom(groundService.getArea(groundID)));
+        return ResponseEntity.ok(groundService.biggestRoom(groundService.getRoomList(groundID)));
     }
 
     @PostMapping("/ground")

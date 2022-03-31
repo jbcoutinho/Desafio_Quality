@@ -51,14 +51,23 @@ class GroundServiceTest {
 		return new Ground(1L,"name", new District(1L,"teste", BigDecimal.valueOf(15)), rooms);
 	}
 
+    @Test
+    void shouldReturnRoomsArea() {
+        List<RoomDTO> roomList;
+
+		Mockito.when(groundRepositoryMock.findById(Mockito.anyLong())).thenReturn(Optional.of(createGround()));
+        roomList = service.getRoomList(Mockito.anyLong());
+
+
+        assertEquals(null, roomList);
+    }
+
 	@Test
 	void shouldReturnGroundArea() {
-
 		Mockito.when(groundRepositoryMock.findById(Mockito.anyLong())).thenReturn(Optional.of(mockGround()));
 		Double area = service.groundArea(Mockito.anyLong());
 
 		assertEquals(15.0, area);
-		
 	}
 
     public Ground createGround() {
@@ -125,6 +134,5 @@ class GroundServiceTest {
         Ground save = service.save(groundDTO);
 
         assertEquals(ground, save);
-
     }
 }
