@@ -92,7 +92,7 @@ public class GroundService {
      * @param room comodo para calculo da area
      * @return area calculada do comodo
      */
-    public Double calculaArea(Room room) {
+    private Double calculaArea(Room room) {
         return room.getRoomLength() * room.getRoomWidth();
     }
 
@@ -101,8 +101,12 @@ public class GroundService {
      * @param rooms lista de comodos para efetuar a soma
      * @return Double - area total de uma lista de comodos.
      */
-    public Double sumRoomsArea(List<RoomDTO> rooms) {
+    private Double sumRoomsArea(List<RoomDTO> rooms) {
         return rooms.stream().reduce(0.0, (acc, ele) -> ele.getArea() + acc, Double::sum);
+    }
+
+    public RoomDTO area(List<RoomDTO> rooms) {
+        return biggestArea(rooms);
     }
 
     /**
@@ -110,7 +114,7 @@ public class GroundService {
      * @param rooms lista de quartos para avaliacao
      * @return Comodo com a maior area
      */
-    public RoomDTO biggestArea(List<RoomDTO> rooms) {
+    private RoomDTO biggestArea(List<RoomDTO> rooms) {
         List<RoomDTO> roomsSortedByAreaDTOS = rooms.stream().sorted(Comparator.comparing(RoomDTO::getArea)).collect(Collectors.toList());
 
         return roomsSortedByAreaDTOS.get(rooms.size()-1);
