@@ -6,7 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 @Data
 @Entity
@@ -18,14 +19,8 @@ public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotNull
     private String roomName;
-
-    @NotNull
     private Double roomLength;
-
-    @NotNull
     private Double roomWidth;
 
     public Room(String roomName, Double roomLength, Double roomWidth) {

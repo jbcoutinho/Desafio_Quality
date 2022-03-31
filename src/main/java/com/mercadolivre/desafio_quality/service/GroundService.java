@@ -12,6 +12,7 @@ import com.mercadolivre.desafio_quality.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
@@ -35,16 +36,16 @@ public class GroundService {
      * @return retorna uma lista com todos os comodos de uma propriedade com sua area ja calculada
      */
     public List<RoomDTO> getArea(Long groundID) {
-        return calculateArea(groundID);
+        return calculateGroundArea(groundID);
     }
 
-    private List<RoomDTO> calculateArea(Long groundID) {
+    private List<RoomDTO> calculateGroundArea(Long groundID) {
         Ground ground = findById(groundID);
 
         return ground
                 .getRooms()
                 .stream()
-                .map(room -> new RoomDTO(room.getRoomName(), calculaArea(room)))
+                .map(room -> new RoomDTO(room.getRoomName(), caculateRoomArea(room)))
                 .collect(Collectors.toList());
     }
 
@@ -64,7 +65,7 @@ public class GroundService {
     private Ground findById(Long groundId) {
         Optional<Ground> opt = groundRepository.findById(groundId);
         if(opt.isEmpty()){
-            throw new RuntimeException("imovel nao encontrado na nossa base de dados!");
+            throw new RuntimeException("Imóvel nao encontrado na nossa base de dados!");
         }
         return opt.get();
     }
@@ -75,7 +76,7 @@ public class GroundService {
      * @return retorna a area da propriedade
      */
     public Double groundArea(Long groundID) {
-        List<RoomDTO> listRoomDTO = cal(groundID);
+        List<RoomDTO> listRoomDTO = calculateGroundArea(groundID);
         return sumRoomsArea(listRoomDTO);
     }
 
@@ -92,7 +93,7 @@ public class GroundService {
      * @param room comodo para calculo da area
      * @return area calculada do comodo
      */
-    public Double calculaArea(Room room) {
+    private Double caculateRoomArea(Room room) {
         return room.getRoomLength() * room.getRoomWidth();
     }
 
@@ -101,8 +102,12 @@ public class GroundService {
      * @param rooms lista de comodos para efetuar a soma
      * @return Double - area total de uma lista de comodos.
      */
-    public Double sumRoomsArea(List<RoomDTO> rooms) {
+    private Double sumRoomsArea(List<RoomDTO> rooms) {
         return rooms.stream().reduce(0.0, (acc, ele) -> ele.getArea() + acc, Double::sum);
+    }
+
+    public RoomDTO biggestRoom(List<RoomDTO> rooms) {
+        return biggestArea(rooms);
     }
 
     /**
@@ -110,7 +115,7 @@ public class GroundService {
      * @param rooms lista de quartos para avaliacao
      * @return Comodo com a maior area
      */
-    public RoomDTO biggestArea(List<RoomDTO> rooms) {
+    private RoomDTO biggestArea(List<RoomDTO> rooms) {
         List<RoomDTO> roomsSortedByAreaDTOS = rooms.stream().sorted(Comparator.comparing(RoomDTO::getArea)).collect(Collectors.toList());
 
         return roomsSortedByAreaDTOS.get(rooms.size()-1);
