@@ -9,6 +9,8 @@ import com.mercadolivre.desafio_quality.model.dto.RoomDTO;
 import com.mercadolivre.desafio_quality.model.dto.RoomInputDTO;
 import com.mercadolivre.desafio_quality.repository.GroundRepository;
 import com.mercadolivre.desafio_quality.repository.RoomRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,16 +22,18 @@ import java.util.stream.Collectors;
 
 @Service
 public class GroundService {
-    @Autowired
-    private DistrictService districtService;
+
+    private final DistrictService districtService;
 
     private final GroundRepository groundRepository;
 
-    @Autowired
-    private RoomRepository roomRepository;
+    private final RoomRepository roomRepository;
 
-    public GroundService(GroundRepository groundRepository) {
+
+    public GroundService(GroundRepository groundRepository, RoomRepository roomRepository, DistrictService districtService) {
         this.groundRepository = groundRepository;
+        this.roomRepository = roomRepository;
+        this.districtService = districtService;
     }
 
     /**
