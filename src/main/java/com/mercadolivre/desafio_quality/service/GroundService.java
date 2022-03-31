@@ -75,7 +75,7 @@ public class GroundService {
      * @return retorna a area da propriedade
      */
     public Double groundArea(Long groundID) {
-        List<RoomDTO> listRoomDTO = getArea(groundID);
+        List<RoomDTO> listRoomDTO = cal(groundID);
         return sumRoomsArea(listRoomDTO);
     }
 

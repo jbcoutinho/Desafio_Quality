@@ -25,10 +25,14 @@ import com.mercadolivre.desafio_quality.service.GroundService;
 class GroundServiceTest {
  
 	private GroundService groundService;
-	
-	@Test
-	void shouldReturnRoomArea() {
 
+
+
+	@Test
+	void shouldReturnGroundArea() {
+		Double area = groundService.groundArea(Mockito.anyLong());
+
+		assertEquals();
 		
 	}
 	
@@ -36,22 +40,5 @@ class GroundServiceTest {
 		return new RoomDTO("any_name", 10.0);
 	}
 	
-//	private Ground mockGround() {
-//		return new Ground(
-//			"any_name",
-//			mockDistrict(),
-//			mockRoomList()
-//		);
-//	}
-//
-//	private District mockDistrict() {
-//		return new District(
-//			"any_name",
-//			BigDecimal.valueOf(1000)
-//		);
-//	}
-//
-//	private List<Room> mockRoomList() {
-//
-//	}
+
 }
