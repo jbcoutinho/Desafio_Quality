@@ -1,5 +1,6 @@
 package com.mercadolivre.desafio_quality.service;
 
+import com.mercadolivre.desafio_quality.exception.ResourceNotFoundException;
 import com.mercadolivre.desafio_quality.model.District;
 import com.mercadolivre.desafio_quality.model.Ground;
 import com.mercadolivre.desafio_quality.model.Room;
@@ -78,7 +79,7 @@ public class GroundService {
     private Ground findById(Long groundId) {
         Optional<Ground> opt = groundRepository.findById(groundId);
         if(opt.isEmpty()){
-            throw new RuntimeException("Imóvel nao encontrado na nossa base de dados!");
+            throw new ResourceNotFoundException("Imóvel nao encontrado na nossa base de dados!");
         }
         return opt.get();
     }

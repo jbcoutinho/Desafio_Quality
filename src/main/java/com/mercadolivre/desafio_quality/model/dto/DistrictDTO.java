@@ -17,7 +17,8 @@ public class DistrictDTO {
     @Size(max = 45, message = "O nome do bairro deve ter no maximo 45 caracteres")
     private String propDistrict;
     @NotNull(message = "O valor do metro quadrado deve ser preenchido")
-    @Max(value = 13, message = "O valor do metro quadrado deve ter no maximo 13 caracteres")
+    @Max(value = 13, message = "O valor do metro quadrado deve ter no maximo 13")
+    @Min(value = 0, message = "O valor do metro quadrado deve ser maior ou igual 0")
     private BigDecimal valueDistrictM2;
 
     public static District parseToDistrict(DistrictDTO dto) {
