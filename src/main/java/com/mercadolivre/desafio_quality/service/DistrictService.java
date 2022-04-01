@@ -6,6 +6,8 @@ import com.mercadolivre.desafio_quality.repository.DistrictRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class DistrictService {
 
@@ -18,5 +20,4 @@ public class DistrictService {
     public District save (District district) {
         return  repository.save(district);
     }
-
 }

@@ -27,7 +27,6 @@ public class GroundService {
 
     private final RoomRepository roomRepository;
 
-
     public GroundService(GroundRepository groundRepository, RoomRepository roomRepository, DistrictService districtService) {
         this.groundRepository = groundRepository;
         this.roomRepository = roomRepository;

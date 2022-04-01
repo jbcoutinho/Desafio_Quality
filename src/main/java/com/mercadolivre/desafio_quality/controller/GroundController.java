@@ -3,6 +3,7 @@ package com.mercadolivre.desafio_quality.controller;
 import com.mercadolivre.desafio_quality.model.Ground;
 import com.mercadolivre.desafio_quality.model.dto.GroundDTO;
 import com.mercadolivre.desafio_quality.model.dto.RoomDTO;
+import com.mercadolivre.desafio_quality.repository.GroundRepository;
 import com.mercadolivre.desafio_quality.service.GroundService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,9 @@ public class GroundController {
 
     @Autowired
     private GroundService groundService;
+
+    @Autowired
+    private GroundRepository groundRepository;
 
     /**
      * Calcula o valor de uma propriedade baseado na sua area e no seu bairro
