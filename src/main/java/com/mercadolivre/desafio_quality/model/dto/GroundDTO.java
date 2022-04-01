@@ -15,9 +15,9 @@ import java.util.List;
 @NoArgsConstructor
 public class GroundDTO {
 
-    @NotBlank
-    @Size(max = 30)
-    @Pattern(regexp = "[A-Z][a-záàâãéèêíïóôõöúçñ]+", message = "O nome do cômodo deve começar com letra maiúscula.")
+    @NotBlank(message = "O nome do bairro deve ser preenchido")
+    @Size(max = 30, message = "O nome da propriedade deve ter no maximo 30 caracteres")
+    @Pattern(regexp = "[A-Z][a-záàâãéèêíïóôõöúçñ]+", message = "O nome da propriedade deve começar com letra maiúscula.")
     private String propName;
 
     @Valid

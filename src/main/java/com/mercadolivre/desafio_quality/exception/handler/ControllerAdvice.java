@@ -1,4 +1,4 @@
-package com.mercadolivre.desafio_quality.controller.advice;
+package com.mercadolivre.desafio_quality.exception.handler;
 
 import com.mercadolivre.desafio_quality.model.dto.ErrorDTO;
 import org.springframework.http.HttpStatus;

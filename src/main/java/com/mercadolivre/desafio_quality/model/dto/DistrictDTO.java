@@ -13,11 +13,11 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class DistrictDTO {
 
-    @NotBlank
-    @Size(max = 45)
+    @NotBlank(message = "O nome do bairro deve ser preenchido")
+    @Size(max = 45, message = "O nome do bairro deve ter no maximo 45 caracteres")
     private String propDistrict;
-    @NotNull
-    @Max(13)
+    @NotNull(message = "O valor do metro quadrado deve ser preenchido")
+    @Max(value = 13, message = "O valor do metro quadrado deve ter no maximo 13 caracteres")
     private BigDecimal valueDistrictM2;
 
     public static District parseToDistrict(DistrictDTO dto) {

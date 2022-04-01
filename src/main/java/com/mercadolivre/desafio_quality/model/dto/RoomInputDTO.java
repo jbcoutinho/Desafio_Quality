@@ -14,17 +14,17 @@ public class RoomInputDTO {
 
     @NotBlank(message = "O nome do cômodo não pode ficar vazio.")
     @Pattern(regexp = "[A-Z][a-záàâãéèêíïóôõöúçñ]+", message = "O nome do cômodo deve começar com letra maiúscula.")
-    @Size(max = 30)
+    @Size(max = 30, message = "O nome do cômodo deve ter no maximo 30 caracteres")
     private String roomName;
 
-    @NotNull
-    @Min(0)
-    @Max(33)
+    @NotNull(message = "O comprimento não pode ficar vazio.")
+    @Min(value = 0, message = "O valor minimo para o comprimento deve ser 0")
+    @Max(value = 33, message = "O valor maximo para o comprimento deve ser 30")
     private Double roomLength;
 
-    @NotNull
-    @Min(0)
-    @Max(25)
+    @NotNull(message = "A largura não pode ficar vazia.")
+    @Min(value = 0, message = "O valor minimo para o largura deve ser 0")
+    @Max(value = 25, message = "O valor maximo para o largura deve ser 25")
     private Double roomWidth;
 
     public static Room parseToRoom(RoomInputDTO dto) {
