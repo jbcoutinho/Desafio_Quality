@@ -34,28 +34,33 @@ public class GroundService {
     }
 
     /**
-     * Recebe os dados de uma propriedade e converte em uma lista de comodos com sua area calculada
-     * @param groundID - objeto com os dados da propriedade a ser avaliada
-     * @return retorna uma lista com todos os comodos de uma propriedade com sua area ja calculada
+     * Recebe o ID de uma propriedade e chama o metodo para retornar a area calculada
+     * @param groundID Um Long que representa um ID de um cômodo
+     * @return Uma lista de comôdos
      */
     public List<RoomDTO> getRoomList(Long groundID) {
         return returnRoomList(groundID);
     }
 
+    /**
+     * Recebe o ID de uma propriedade e converte em uma lista de cômodos com sua area calculada
+     * @param groundID - Um Long que é o ID da propriedade a ser avaliada
+     * @return Uma lista com todos os cômodos de uma propriedade com sua área ja calculada
+     */
     private List<RoomDTO> returnRoomList(Long groundID) {
         Ground ground = findById(groundID);
 
         return ground
                 .getRooms()
                 .stream()
-                .map(room -> new RoomDTO(room.getRoomName(), caculateRoomArea(room)))
+                .map(room -> new RoomDTO(room.getRoomName(), calculateRoomArea(room)))
                 .collect(Collectors.toList());
     }
 
     /**
      * Calcula o valor de uma propriedade baseado na sua area e no seu bairro
-     * @param groundId - id da propriedade com os dados para avaliacao
-     * @return retorna o valor da propriedade
+     * @param groundId - Um Long ID da propriedade
+     * @return valor da propriedade
      */
     public String groundValue(Long groundId) {
         Ground ground = findById(groundId);
@@ -65,6 +70,11 @@ public class GroundService {
         return decimalFormat.format(ground.getDistrict().getValueDistrictM2().multiply(BigDecimal.valueOf(totalArea)));
     }
 
+    /**
+     * Busca uma propriedade pelo ID
+     * @param groundId Um Long ID de um propriedade
+     * @return Uma propriedade
+     */
     private Ground findById(Long groundId) {
         Optional<Ground> opt = groundRepository.findById(groundId);
         if(opt.isEmpty()){
@@ -74,15 +84,20 @@ public class GroundService {
     }
 
     /**
-     * Calcula a area de uma propriedade
-     * @param groundID - objeto com os dados da propriedade a ser avaliada
-     * @return retorna a area da propriedade
+     * Calcula a área de uma propriedade
+     * @param groundID - Um Long ID de um propriedade
+     * @return A área da propriedade
      */
     public Double groundArea(Long groundID) {
         List<RoomDTO> listRoomDTO = returnRoomList(groundID);
         return sumRoomsArea(listRoomDTO);
     }
 
+    /**
+     * Salva a propriedade
+     * @param dto Uma dto da propriedade
+     * @return A propriedade que foi salva
+     */
     public Ground save(GroundDTO dto) {
         List<Room> rooms = save(dto.getRooms().stream().map(RoomInputDTO::parseToRoom).collect(Collectors.toList()));
 
@@ -92,23 +107,28 @@ public class GroundService {
     }
 
     /**
-     * Calcula a area de um comodo
-     * @param room comodo para calculo da area
-     * @return area calculada do comodo
+     * Calcula a área de um cômodo
+     * @param room cômodo para calculo da área
+     * @return área calculada do cômodo
      */
-    private Double caculateRoomArea(Room room) {
+    private Double calculateRoomArea(Room room) {
         return room.getRoomLength() * room.getRoomWidth();
     }
 
     /**
-     * Soma a area total de uma lista de comodos
-     * @param rooms lista de comodos para efetuar a soma
-     * @return Double - area total de uma lista de comodos.
+     * Soma a área total de uma lista de cômodos
+     * @param rooms lista de cômodos para efetuar a soma
+     * @return Double - área total de uma lista de cômodos.
      */
     private Double sumRoomsArea(List<RoomDTO> rooms) {
         return rooms.stream().reduce(0.0, (acc, ele) -> ele.getArea() + acc, Double::sum);
     }
 
+    /**
+     * Busca o cômodo com a maior área
+     * @param rooms Uma lista de cômodos
+     * @return O cômodo com a maior área
+     */
     public RoomDTO biggestRoom(List<RoomDTO> rooms) {
         return biggestArea(rooms);
     }
@@ -124,6 +144,11 @@ public class GroundService {
         return roomsSortedByAreaDTOS.get(rooms.size()-1);
     }
 
+    /**
+     * Salva uma lista de cômodos
+     * @param rooms Uma lista de cômodos
+     * @return Uma lista de cômodos
+     */
     public List<Room> save(List<Room> rooms) {
         return roomRepository.saveAll(rooms);
     }
