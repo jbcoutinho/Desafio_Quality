@@ -113,7 +113,7 @@ class GroundServiceTest {
 
         String result = service.groundValue(Long.valueOf("1234"));
 
-        assertEquals("90,000.00", result);
+        assertEquals("90000.00", result);
     }
 
     @Test

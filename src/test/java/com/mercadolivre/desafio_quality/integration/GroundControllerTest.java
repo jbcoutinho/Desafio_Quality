@@ -1,9 +1,7 @@
 package com.mercadolivre.desafio_quality.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mercadolivre.desafio_quality.model.District;
 import com.mercadolivre.desafio_quality.model.Ground;
-import com.mercadolivre.desafio_quality.repository.DistrictRepository;
 import com.mercadolivre.desafio_quality.repository.GroundRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
