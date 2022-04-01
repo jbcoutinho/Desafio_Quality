@@ -1,0 +1,138 @@
+{
+	"info": {
+		"_postman_id": "44d521a2-ad0c-43b9-afba-fd358cf7ca67",
+		"name": "Desafio quality",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CRUD",
+			"item": [
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rooms\": [{\n        \"roomName\": \"Qualquercoisa\",\n        \"roomLength\": 10,\n        \"roomWidth\": 2\n    },\n    {\n        \"roomName\": \"Qualquer\",\n        \"roomLength\": 10,\n        \"roomWidth\": 1\n    },\n    {\n        \"roomName\": \"Outracoisa\",\n        \"roomLength\": 10,\n        \"roomWidth\": 1\n    }],\n    \"propName\": \"Myn\",\n    \"district\": {\n        \"propDistrict\": 9,\n        \"valueDistrictM2\":10.0\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/ground",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"ground"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "US-0001 - Calculate Ground Value Copy 2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/ground/1/value",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"ground",
+						"1",
+						"value"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US-0002 - Calculate Ground Area",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/ground/1/area",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"ground",
+						"1",
+						"area"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US-0003 - Find biggest Room",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/ground/1/room/biggest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"ground",
+						"1",
+						"room",
+						"biggest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US-0004 - Determinar a área de cada cômodo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/ground/1/room/areas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"ground",
+						"1",
+						"room",
+						"areas"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
