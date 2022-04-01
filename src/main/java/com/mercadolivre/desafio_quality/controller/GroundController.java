@@ -19,9 +19,9 @@ public class GroundController {
     private GroundService groundService;
 
     /**
-     * Calcula o valor de uma propriedade baseado na sua area e no seu bairro
-     * @param groundID - id do objeto com os dados da propriedade a ser avaliada
-     * @return retorna o valor da propriedade
+     * Calcula o valor de uma propriedade baseado na sua Área e no seu bairro
+     * @param groundID - Long ID da propriedade
+     * @return O valor da propriedade com status 200 OK
      */
     @GetMapping("/ground/{groundID}/value")
     public ResponseEntity<String> groundValue(@PathVariable Long groundID) {
@@ -29,9 +29,9 @@ public class GroundController {
     }
 
     /**
-     * Calcula a area de uma propriedade
-     * @param groundID - objeto com os dados da propriedade a ser avaliada
-     * @return retorna a area da propriedade
+     * Calcula a área de uma propriedade
+     * @param groundID - Long com o ID da propriedade a ser avaliada
+     * @return retorna a área da propriedade com status 200 OK
      */
     @GetMapping("/ground/{groundID}/area")
     public ResponseEntity<Double> groundArea(@PathVariable Long groundID) {
@@ -39,9 +39,9 @@ public class GroundController {
     }
 
     /**
-     * Calcula a area de todos os comodos de uma propriedade
-     * @param groundID - objeto com os dados da propriedade a ser avaliada
-     * @return retorna a area de cada comodo da propriedade
+     * Calcula a área de todos os cômodos de uma propriedade
+     * @param groundID - Long com o ID da propriedade a ser avaliada
+     * @return A area de cada cômodo da propriedade com status 200 OK
      */
     @GetMapping("/ground/{groundID}/room/areas")
     public ResponseEntity<List<RoomDTO>> groundAreas(@PathVariable Long groundID) {
@@ -49,15 +49,21 @@ public class GroundController {
     }
 
     /**
-    * Avalia o comodo com a maior area em uma propriedade
-    * @param groundID - objeto com os dados da propriedade a ser avaliada
-    * @return Retorna um objeto com os dados do maior comodo em uma propriedade
+    * Avalia o cômodo com a maior área em uma propriedade
+    * @param groundID - Long com o ID da propriedade a ser avaliada
+    * @return Um objeto com os dados do maior comodo em uma propriedade com status 200 OK
     * */
     @GetMapping("/ground/{groundID}/room/biggest")
     public ResponseEntity<RoomDTO> biggestRoomArea(@PathVariable Long groundID) {
         return ResponseEntity.ok(groundService.biggestRoom(groundService.getRoomList(groundID)));
     }
 
+
+    /**
+     * Cadastra uma nova propriedade
+     * @param ground Um objeto com todos os dados da propriedade a ser cadastrada
+     * @return O objeto que foi cadastrado com o status 201 created
+     */
     @PostMapping("/ground")
     public ResponseEntity<Ground> create(@RequestBody @Valid GroundDTO ground) {
         return new ResponseEntity<>(groundService.save(ground), HttpStatus.CREATED );

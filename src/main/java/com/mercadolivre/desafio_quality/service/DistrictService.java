@@ -17,6 +17,11 @@ public class DistrictService {
         this.repository = repository;
     }
 
+    /**
+     * Salva um bairro
+     * @param district Um objeto District que contem os dados do bairro
+     * @return O objeto District que foi salvo
+     */
     public District save (District district) {
         return  repository.save(district);
     }
