@@ -58,7 +58,7 @@ public class GroundControllerTest {
     public void shouldGetRoomDTOList() throws Exception {
         creatGround();
         mockMvc
-            .perform(MockMvcRequestBuilders.get("/ground/{groundID}/room/areas", 1))
+            .perform(MockMvcRequestBuilders.get("/ground/{groundID}/room/areas", 2))
             .andExpect(status().isOk())
             .andExpect(content().contentType("application/json"))
             .andReturn();
@@ -71,7 +71,7 @@ public class GroundControllerTest {
     @Test
     public void shouldGroundValueReturn200() throws Exception {
         creatGround();
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/ground/{groundID}/value", "1"))
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/ground/{groundID}/value", "2"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         String response = result.getResponse().getContentAsString();
@@ -81,7 +81,7 @@ public class GroundControllerTest {
     @Test
     public void shouldGroundAreaReturn200() throws Exception {
         creatGround();
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/ground/{groundID}/area", "1"))
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/ground/{groundID}/area", "2"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         String response = result.getResponse().getContentAsString();
@@ -91,7 +91,7 @@ public class GroundControllerTest {
     @Test
     public void shouldBiggestRoomAreaReturn200() throws Exception {
         creatGround();
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/ground/{groundID}/room/biggest", "1"))
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/ground/{groundID}/room/biggest", "2"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         String response = result.getResponse().getContentAsString();
